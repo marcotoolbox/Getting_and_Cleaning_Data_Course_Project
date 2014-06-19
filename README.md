@@ -5,7 +5,7 @@ Files in this Repository refer to the Course Project of Getting and Cleaning Dat
 
 You can find:
 
-* A R script run_analysis.R which creates a tidy data set starting from raw data (supposed to be in your working Directory). Raw data is from Human Activity Recognition Using Smartphones Data Set.
+* A R script (run_analysis.R) which creates a tidy data set starting from raw data (supposed to be in your working Directory). Raw data is from Human Activity Recognition Using Smartphones Data Set.
 * A codebook
 * This README.md file
 
@@ -19,7 +19,7 @@ You will not find:
 
 
 
-## Assunmption
+## Assumption
 
 
 As per assignment request, __the script can be run as long as the Raw data is in your working directory.__
