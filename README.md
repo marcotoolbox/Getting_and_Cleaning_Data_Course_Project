@@ -5,9 +5,10 @@ Files in this Repository refer to the Course Project of Getting and Cleaning Dat
 
 You can find:
 
-* A R script run_analysis.R which creates a tidy data set starting from raw data (supposed to be in your working Directory). Raw data are from Human Activity Recognition Using Smartphones Data Set.
+* A R script run_analysis.R which creates a tidy data set starting from raw data (supposed to be in your working Directory). Raw data is from Human Activity Recognition Using Smartphones Data Set.
 * A codebook
 * This README.md file
+
 
 __The script has been designed and tested for working properly on a Windows system.__
 
@@ -20,11 +21,13 @@ You will not find:
 
 ## Assunmption
 
-__As per assignment request, the script can be run as long as the Samsung data is in your working directory.__
+
+As per assignment request, __the script can be run as long as the Raw data is in your working directory.__
 
 
 
 ## Raw data description: Human Activity Recognition Using Smartphones Data Set 
+
 
 __Abstract__:
 Human Activity Recognition database built from the recordings of 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted smartphone with embedded inertial sensors.
@@ -41,7 +44,7 @@ The experiments have been carried out with a group of 30 volunteers within an ag
 
 The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain. 
 
-__For more info on original data set, please have a look at the README.txt inlcuded in the data set.__:
+__For more info on original data set, please have a look at the README.txt inlcuded in the data set directory.__:
 
 
 ## Script Overview
@@ -68,18 +71,51 @@ The script is composed of 8 sections:
 7. Task 5: Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 8. Exporting data
 
-This script accomplishes the following(more detail can be seen in the actual comments to run_analysis.R):
-    * Text
-    * More text
-    * Yet more text
-    * And another one
-    * And another one
-    * Start of an embedded list:
-      * embedded list item 1
-      * embedded list item 2
-	  
-	  
-	      - how I processed the data
-        - what assumptions I made
-        - why I did things a certain way
-        - who and where did I obtain original data
+
+Please find below a short description for each section.
+More details in the script lines.
+
+### Section 1 - Data import
+The script starts importing all txt files necessary in order to get a tidy data set as per assignment.
+All imports are made through read.table function.
+
+### Section 2 - Data manipulation
+I decided to convert all data frames in data tables, since data.table object are easier to manipulate (subsetting, updating columns, etc).
+
+Then I added joined all kind of available info (subject ids, feature names, activity labels) to the training and test data set.
+
+
+### Section 3 - Task 1: Merges the training and the test sets to create one data set.
+
+The merge is accomplished via a row binding (rbind function).
+
+
+
+### Section 4 - Task 2: Extracts only the measurements on the mean and standard deviation for each measurement. 
+
+The measurements on the mean and standard deviation have been selected using grepl function in order to apply regular expressions to feature names.
+
+
+
+### Section 5 - Task 3: Uses descriptive activity names to name the activities in the data set
+
+I have joined activity_labels dataset, which links the class labels (1,2,3,4,5,6) with their activity name (WALKING, WALKING_UPSTAIRS, #WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING), to the measurements_subset.
+Join is performed thanks to data.table package functionalities. 
+
+
+### Section 6 - Task 4: Appropriately labels the data set with descriptive variable names. 
+
+Allthough column names already contain feature names (done above in data manipulation section), they do contain characters that are illegal in R names (i.e. dashes and brackets): there are R functions that will reject working with those names.
+In ordert to remove dashes and brackets from feature names subset, make.names functions has been applied.
+
+Then I have decided to remove multiple punctuations inserted by make.names function and misspelling in the original feature names (for example, in some features the word "body" is repeated twice).
+
+### Section 7 - Task 5: Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
+
+This task has been accomplished thanks to melt and dcast function from reshape2 package.
+
+
+### Section 8 - Exporting data
+
+This is the very end of the script: the tidy data set is written to a txt file.
+
